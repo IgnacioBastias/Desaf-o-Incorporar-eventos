@@ -1,3 +1,6 @@
+let nombre;
+const titulo = document.getElementById('titulo');
+const contenido = document.getElementById('contenido');
 let apuesta = 0;
 let apuesta1 = 0;
 let fondo = 0;
@@ -42,6 +45,8 @@ const ResultadoPleno = () => {
         alert("😢 Gana la Casa 😢");
         fondo = fondo - apuesta;
     }
+    fondo1.innerHTML = ` Tu saldo es $ ${fondo} `;
+    contenido.append(fondo1);
 }
 
 const Apuesta = () => {
@@ -64,24 +69,33 @@ const Resultado = () => {
         alert("😢 Gana la Casa 😢");
         fondo = fondo - apuesta;
     }
+    fondo1.innerHTML = ` Tu saldo es $ ${fondo} `;
+    contenido.append(fondo1);
 }
 
-alert(`  ## 🎯 Bienvenido a la ruleta 🎯 ##  `);
+nombre = prompt('Ingresa tu nombre');
+
+let subtitulo = document.createElement("h2");
+subtitulo.innerHTML = `Bienvenid@ ${nombre}`;
+titulo.append(subtitulo);
 
 do {
     fondo = Number(prompt(`💲 Ingrese su dinero 💲`));
 } while (fondo < 5);
 
-do {
+let fondo1 = document.createElement("h2");
+fondo1.innerHTML = ` Tu saldo es $ ${fondo} `;
+contenido.append(fondo1);
+
+const respuestaClickStart = () => {
+
     Opcion = Number(prompt(`
-    --Tu saldo es $ ${fondo}--
       1 Numero
       2 Rojo
       3 Negro
       4 Par
       5 Impar
-      6 Cero
-      7 Salir
+      6 Cero 
     `))
     switch (Opcion) {
         case 1: {
@@ -132,17 +146,25 @@ do {
             Resultado();
             break;
         }
-        case 7: {
-            alert("🙌 Gracias por visitarnos 🙌");
-            break;
-        }
         default: {
             alert("❌ Dato no valido ❌");
             break;
         }
     }
-} while (Opcion !== 7 && fondo > 0);
 
-if (fondo <= 0) {
-    alert(`👎 Te quedaste sin dinero, suerte para la proxima. 👎`);
+    if (fondo <= 0) {
+        fondo1.innerHTML = `👎 Te quedaste sin dinero, suerte para la proxima 👎`;
+        contenido.append(fondo1);
+    }
 }
+
+const respuestaClickRestart = () => {
+    location.reload();
+}
+
+let botonPlay = document.getElementById(`play`);
+botonPlay.onclick = () => { respuestaClickStart() };
+
+let botonRestart = document.getElementById(`restart`);
+botonRestart.addEventListener(`click`, respuestaClickRestart);
+
