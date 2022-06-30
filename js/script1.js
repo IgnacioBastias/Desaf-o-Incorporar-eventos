@@ -3,6 +3,7 @@ const nombre = document.getElementById('nombre');
 const apellido = document.getElementById('apellido');
 let botonStart = document.getElementById(`start`);
 
+
 const respuestaClickStart = () => {
     nombreUsuario = nombre.value;
     apellidoUsuario = apellido.value;

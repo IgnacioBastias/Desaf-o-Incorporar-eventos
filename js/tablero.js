@@ -1,3 +1,9 @@
+const reiniciarApuesta = () => {
+    Valor = ``;
+    Opcion1 = 0;
+    click.style.border = `solid rgba(250, 235, 215, 0.849)`;
+}
+
 const marcarBorde = () => {
     boton1.style.border = `solid rgba(250, 235, 215, 0.849)`;
     boton2.style.border = `solid rgba(250, 235, 215, 0.849)`;

@@ -2,20 +2,16 @@
 
 let apuesta = 0;
 let apuesta1 = 0;
-let fondo = 0;
 let fondo1 = 0;
-let Opcion = 0;
 let Opcion1 = 0;
 let Valor = 0;
 let Valor1 = 0;
 let resultado = 0;
 
-// Funciones DOM
+// Variables DOM
 
 const titulo = document.getElementById('titulo');
 const datos = document.getElementById('datos');
-const nombre = document.getElementById('nombre');
-const apellido = document.getElementById('apellido');
 const agregarDinero = document.getElementsByClassName(`agregarDinero`)[0];
 const dinero = document.getElementById(`dinero`)
 const fichaAmarilla = document.getElementsByClassName('fAmarillo')[0];
@@ -28,6 +24,8 @@ const Impares = document.getElementsByClassName('impar')[0];
 const numeroCero = document.getElementsByClassName('numero0')[0];
 const Negros = document.getElementsByClassName('negro')[0];
 const Rojos = document.getElementsByClassName(`rojo`)[0];
+let subtitulo = document.createElement("h2");
+let resutadoRuleta = document.createElement("h3");
 
 // Storage
 
@@ -65,10 +63,14 @@ const Apuesta = () => {
 
 const ResultadoPleno = () => {
     if (Opcion1 === resultado) {
-        alert("🤑 ¡Ganaste! 🤑");
+        subtitulo.innerHTML = `🤑 ¡Ganaste! 🤑`;
+        titulo.append(subtitulo);
+        // alert("🤑 ¡Ganaste! 🤑");
         saldo = Number(saldo) + apuesta;
     } else {
-        alert("😢 Gana la Casa 😢");
+        subtitulo.innerHTML = `😢 Gana la Casa 😢`;
+        titulo.append(subtitulo);
+        // alert("😢 Gana la Casa 😢");
         saldo = saldo - apuesta;
     }
     fondo1.innerHTML = ` Tu saldo es $ ${saldo} `;
@@ -87,13 +89,18 @@ const ResultadoPleno = () => {
 const Resultado = () => {
     const resultadoFinal = Valor.some(Valor => Valor === resultado);
     if (resultadoFinal === true) {
-        alert("🤑 ¡Ganaste! 🤑");
+        subtitulo.innerHTML = `🤑 ¡Ganaste! 🤑`;
+        titulo.append(subtitulo);
+        // alert("🤑 ¡Ganaste! 🤑");
         saldo = Number(saldo) + apuesta;
     } else {
-        alert("😢 Gana la Casa 😢");
+        subtitulo.innerHTML = `😢 Gana la Casa 😢`;
+        titulo.append(subtitulo);
+        // alert("😢 Gana la Casa 😢");
         saldo = saldo - apuesta;
     }
     fondo1.innerHTML = ` Tu saldo es $ ${saldo} `;
+
     datos.append(fondo1);
 
     if (saldo <= 0) {
@@ -109,12 +116,18 @@ const Resultado = () => {
 const Girar = () => {
     if (Valor != ``) {
         resultado = Math.round(Math.random() * 36);
-        alert(`La ruleta salio ${resultado}`);
+        resutadoRuleta.innerHTML = `La ruleta salio ${resultado}`;
+        titulo.append(resutadoRuleta);
+        // alert(`La ruleta salio ${resultado}`);
         Resultado();
+        reiniciarApuesta();
     } else if (Opcion1 != 0) {
         resultado = Math.round(Math.random() * 36);
-        alert(`La ruleta salio ${resultado}`);
+        resutadoRuleta.innerHTML = `La ruleta salio ${resultado}`;
+        titulo.append(resutadoRuleta);
+        // alert(`La ruleta salio ${resultado}`);
         ResultadoPleno();
+        reiniciarApuesta();
     } else {
         alert(`olvidaste tu apuesta`)
     }
@@ -229,7 +242,6 @@ agregarDinero.addEventListener(`click`, respuestaAgregarDinero);
 botonGirar.addEventListener(`click`, Girar);
 
 if (apellidoUsuario != `` && nombreUsuario != ``) {
-    let subtitulo = document.createElement("h2");
     subtitulo.innerHTML = `Bienvenid@ ${nombreUsuario} ${apellidoUsuario}`;
     titulo.append(subtitulo);
 }
