@@ -25,7 +25,6 @@ const numeroCero = document.getElementsByClassName('numero0')[0];
 const Negros = document.getElementsByClassName('negro')[0];
 const Rojos = document.getElementsByClassName(`rojo`)[0];
 let subtitulo = document.createElement("h2");
-let resutadoRuleta = document.createElement("h3");
 
 // Storage
 
@@ -54,82 +53,106 @@ const fichas = [
 
 const Apuesta = () => {
     if (apuesta > saldo) {
-        alert("No tienes tanto dinero");
+        Swal.fire({
+            title: '¡ No tienes tanto dinero !',
+            color: `rgb(250, 235, 215)`,
+            background: ' rgba(13, 105, 13)',
+            showConfirmButton: false,
+            timer: 2000,
+        })
         apuesta = 0;
     } else {
         alert(`Estas apostando $${apuesta}`);
     }
 }
 
+const ganar = () => {
+    Swal.fire({
+        title: `La ruleta salio ${resultado} 
+                🤑 ¡Ganaste! 🤑`,
+        color: `rgb(250, 235, 215)`,
+        background: ' rgba(13, 105, 13)',
+        showConfirmButton: false,
+        timer: 2000,
+    })
+    saldo = Number(saldo) + apuesta;
+}
+
+const perder = () => {
+    Swal.fire({
+        title: `La ruleta salio ${resultado} 
+                😢 Gana la Casa 😢`,
+        color: `rgb(250, 235, 215)`,
+        background: ' rgba(13, 105, 13)',
+        showConfirmButton: false,
+        timer: 2000,
+    })
+    saldo = saldo - apuesta;
+}
+
+const sinDinero = () => {
+    Swal.fire({
+        title: '😢 Ganó la Casa 😢',
+        text: '👎 Te quedaste sin dinero 👎',
+        confirmButtonText: `<a href="index.html">Reiniciar</a>`,
+        color: `rgb(250, 235, 215)`,
+        background: ' rgba(13, 105, 13)',
+    })
+    fichaRoja.style.visibility = "hidden";
+    fichaAmarilla.style.visibility = "hidden";
+    fichaBlanca.style.visibility = "hidden";
+    fichaNegra.style.visibility = "hidden";
+    botonGirar.style.visibility = "hidden";
+}
+
 const ResultadoPleno = () => {
-    if (Opcion1 === resultado) {
-        subtitulo.innerHTML = `🤑 ¡Ganaste! 🤑`;
-        titulo.append(subtitulo);
-        // alert("🤑 ¡Ganaste! 🤑");
-        saldo = Number(saldo) + apuesta;
-    } else {
-        subtitulo.innerHTML = `😢 Gana la Casa 😢`;
-        titulo.append(subtitulo);
-        // alert("😢 Gana la Casa 😢");
-        saldo = saldo - apuesta;
-    }
+
+    Opcion1 === resultado ? ganar() : perder();
+
     fondo1.innerHTML = ` Tu saldo es $ ${saldo} `;
     datos.append(fondo1);
 
-    if (saldo <= 0) {
-        fondo1.innerHTML = `👎 Te quedaste sin dinero 👎`;
-        fichaRoja.style.visibility = "hidden";
-        fichaAmarilla.style.visibility = "hidden";
-        fichaBlanca.style.visibility = "hidden";
-        fichaNegra.style.visibility = "hidden";
-        botonGirar.style.visibility = "hidden";
-    }
+    saldo <= 0 ? sinDinero() : "";
+
 }
 
 const Resultado = () => {
-    const resultadoFinal = Valor.some(Valor => Valor === resultado);
-    if (resultadoFinal === true) {
-        subtitulo.innerHTML = `🤑 ¡Ganaste! 🤑`;
-        titulo.append(subtitulo);
-        // alert("🤑 ¡Ganaste! 🤑");
-        saldo = Number(saldo) + apuesta;
-    } else {
-        subtitulo.innerHTML = `😢 Gana la Casa 😢`;
-        titulo.append(subtitulo);
-        // alert("😢 Gana la Casa 😢");
-        saldo = saldo - apuesta;
-    }
-    fondo1.innerHTML = ` Tu saldo es $ ${saldo} `;
 
+    const resultadoFinal = Valor.some(Valor => Valor === resultado);
+
+    resultadoFinal === true ? ganar() : perder();
+
+    fondo1.innerHTML = ` Tu saldo es $ ${saldo} `;
     datos.append(fondo1);
 
-    if (saldo <= 0) {
-        fondo1.innerHTML = `👎 Te quedaste sin dinero 👎`;
-        fichaRoja.style.visibility = "hidden";
-        fichaAmarilla.style.visibility = "hidden";
-        fichaBlanca.style.visibility = "hidden";
-        fichaNegra.style.visibility = "hidden";
-        botonGirar.style.visibility = "hidden";
-    }
+    saldo <= 0 ? sinDinero() : "";
 }
 
 const Girar = () => {
     if (Valor != ``) {
+
         resultado = Math.round(Math.random() * 36);
-        resutadoRuleta.innerHTML = `La ruleta salio ${resultado}`;
-        titulo.append(resutadoRuleta);
-        // alert(`La ruleta salio ${resultado}`);
+        subtitulo.innerHTML = `La ruleta salio ${resultado}`;
+        titulo.append(subtitulo);
         Resultado();
         reiniciarApuesta();
+
     } else if (Opcion1 != 0) {
+
         resultado = Math.round(Math.random() * 36);
-        resutadoRuleta.innerHTML = `La ruleta salio ${resultado}`;
-        titulo.append(resutadoRuleta);
-        // alert(`La ruleta salio ${resultado}`);
+        subtitulo.innerHTML = `La ruleta salio ${resultado}`;
+        titulo.append(subtitulo);
         ResultadoPleno();
         reiniciarApuesta();
+
     } else {
-        alert(`olvidaste tu apuesta`)
+        Swal.fire({
+            color: `rgb(250, 235, 215)`,
+            background: ' rgba(13, 105, 13)',
+            title: '¡ Olvidaste tu apuesta !',
+            showConfirmButton: false,
+            timer: 2000,
+        })
     }
 }
 

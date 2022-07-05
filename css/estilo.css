@@ -4,7 +4,12 @@
     box-sizing: border-box;
 }
 .btn a{
-    color:antiquewhite ;
+    color:rgb(250, 235, 215) ;
+    text-decoration: none;
+}
+
+a{
+    color:rgb(250, 235, 215) ;
     text-decoration: none;
 }
 
@@ -124,7 +129,7 @@ h2 {
 }
 
 .num:hover, .grupos:hover{
-    border: solid orange;
+    border: solid blue;
     transform: scale(1.1,1.1)
 }
 
